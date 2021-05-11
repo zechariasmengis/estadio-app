@@ -1,0 +1,60 @@
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 150px;
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: rgb(72, 221, 134);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+
+  .main-container {
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 300px 100px auto;
+  }
+
+  .search-container {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      background-color: skyblue;
+  }
+
+  #searchbar {
+    width: 80%;  
+    display: block;
+    margin : 0 auto;
+    margin-top: 35px;
+    border-radius: 3px;
+  }
+
+  #stadiadiv {
+      grid-column-start: 2;
+      grid-row-start: 3;
+  }
+
+  .hero {
+      grid-column-start: 2;
+      grid-column-end: 3;
+      background-color: red;
+  }
+

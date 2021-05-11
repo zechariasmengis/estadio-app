@@ -1,7 +1,11 @@
 console.log('hello world')
 
 const stadiaApi = 'http://127.0.0.1:3000/stadia'
+const usersApi = 'http://127.0.0.1:3000/users'
 
+const sideNav = document.querySelector('.sidenav');
+
+getUsers()
 getStadia();
 
 function getStadia() {
@@ -10,12 +14,12 @@ function getStadia() {
       .then(displayStadia);
   };
 
-  function displayStadia(stadia) {
-      console.log(stadia)
-      stadia.forEach(displayStadium)
-  }
+function displayStadia(stadia) {
+    console.log(stadia)
+    stadia.forEach(displayStadium)
+}
 
-  function displayStadium(stadium) {
+function displayStadium(stadium) {
     const stadiaList = document.getElementById('stadiadiv');
     const stadiumInstance = document.createElement('p');
 
@@ -34,5 +38,26 @@ function getStadia() {
         </div>
     `
 
-    stadiaList.append(stadiumInstance)
-  }
+stadiaList.append(stadiumInstance)
+}
+
+function getUsers() {
+    fetch(usersApi)
+      .then((res) => res.json())
+      .then(displayUsers);
+};
+
+function displayUsers(users) {
+    console.log(users)
+    users.forEach(displayUser)
+}
+
+function displayUser(user) {
+    const userInstance = document.createElement('a');
+    
+    userInstance.innerHTML = `
+        ${user.username}
+    `
+    
+    sideNav.append(userInstance)
+    }
