@@ -50,11 +50,26 @@
   #stadiadiv {
       grid-column-start: 2;
       grid-row-start: 3;
+      display: flex;
+      flex-wrap: wrap;
   }
 
   .hero {
       grid-column-start: 2;
       grid-column-end: 3;
       background-color: red;
+  }
+
+  .stadium-card {
+      margin-left: 18px;
+      margin-top: 18px;
+  }
+
+  .stadium-card-image {
+      height: 188px;
+  }
+
+  .stadium-list-item {
+      font-size: 10px;
   }
 
