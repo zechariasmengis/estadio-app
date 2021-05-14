@@ -7,9 +7,11 @@ const searchBar = document.getElementById('searchbar');
 const mainContainer = document.querySelector('.main-container');
 const visitsModal = document.querySelector('.offcanvas offcanvas-start');
 const visitsModalBody = document.querySelector('.offcanvas-body');
-const newUserForm = document.getElementById('newUserForm')
-const userSelect = document.getElementById('userSelect')
-const newVisitForm = document.getElementById('newVisitForm')
+const newUserForm = document.getElementById('newUserForm');
+const userSelect = document.getElementById('userSelect');
+const stadiumSelect = document.getElementById('stadiumSelect');
+const newVisitForm = document.getElementById('newVisitForm');
+
 
 
 newUserForm.addEventListener('submit', (e) => {createNewUser(e)})
@@ -19,6 +21,7 @@ searchBar.addEventListener('keyup', (e) => {console.log(e)})
 getUsers();
 getStadia();
 populateUserSelect();
+populateStadiumSelect();
 
 function getStadia() {
     fetch(stadiaApi)
@@ -33,6 +36,7 @@ function displayStadia(stadia) {
 function displayStadium(stadium) {
     const stadiaList = document.getElementById('stadiadiv');
     const stadiumInstance = document.createElement('p');
+    let stadiumInstanceId = stadium.id;
 
     stadiumInstance.innerHTML = `
         <div class="card stadium-card" style="width: 18rem;">
@@ -44,11 +48,10 @@ function displayStadium(stadium) {
                     <li class="list-group-item stadium-list-item"> 📍 ${stadium.city}, ${stadium.country}</li>
                     <li class="list-group-item stadium-list-item"> 🎟 ${stadium.capacity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</li>
                 </ul><br>
-                <a href="#" class="btn btn-primary" stadiumId="${stadium.id}">Add Visit</a>
             </div>
         </div>
     `
-    stadiaList.append(stadiumInstance)
+    stadiaList.append(stadiumInstance);
 }
 
 function getUsers() {
@@ -69,6 +72,7 @@ function displayUser(user) {
     
     userInstance.innerHTML = `
         ${user.username}
+        <hr>
     `
     userInstance.addEventListener('click', (e) => {
         visitsModalBody.innerHTML = "";
@@ -90,8 +94,18 @@ function populateVisitsModal(user) {
           let allVisits = data;
           allVisits.forEach(visit => {
               if (visit.user_id == user.id) {
-                  let visitInstance = document.createElement('p');
-                  visitInstance.innerHTML = ` ${visit.team_1} ${visit.team_1_score}:${visit.team_2_score} ${visit.team_2}`
+                  let visitInstance = document.createElement('div');
+                  visitInstance.setAttribute('class', 'card visit-card')
+                  visitInstance.innerHTML = `
+                    <div class="card-header">
+                    ${visit.stadium_id}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">${visit.sport.charAt(0).toUpperCase() + visit.sport.slice(1)} | ${visit.competition}</h5>
+                        <p class="card-text text-center">${visit.team_1} ${visit.team_1_score}:${visit.team_2_score} ${visit.team_2}</p>
+                        <p class="card-text text-center">${visit.date}</p>
+                    </div>
+                  `
                   visitsModalBody.append(visitInstance)
               };
           })
@@ -105,7 +119,6 @@ function createNewUser(e) {
         username: e.target.username.value
     };
 
-    console.log(e.target.username.value);
     fetch(usersApi, {
         method: 'POST',
         headers: {
@@ -133,18 +146,52 @@ function populateUserSelect() {
     })
 }
 
+function populateStadiumSelect() {
+    fetch(stadiaApi)
+    .then((res) => res.json())
+    .then(data => {
+        let allStadia = data;
+        allStadia.forEach(stadium => {
+            let stadiumSelectOption = document.createElement('option');
+            stadiumSelectOption.setAttribute('value', `${stadium.id}`);
+            stadiumSelectOption.innerHTML = `${stadium.name}`
+            stadiumSelect.append(stadiumSelectOption)
+        })
+    })
+}
+
 function createNewVisit(e) {
     e.preventDefault();
+    console.log(e.target.user_id.value)
+    console.log(e.target.team_1.value)
+    console.log(e.target.team_1_score.value)
+    console.log(e.target.team_2.value)
+    console.log(e.target.team_2_score.value)
+    console.log(e.target.date.value)
+    console.log(e.target.sport.value)
+    console.log(e.target.competition.value)
     console.log(e.target.stadium_id.value)
     const newVisit = {
         user_id: e.target.user_id.value,
         stadium_id: e.target.stadium_id.value,
         team_1: e.target.team_1.value,
-        team_1_score: e.target.team_1_score.value,
         team_2: e.target.team_2.value,
-        team_2_score: e.target.team_2_score.value,
         date: e.target.date.value,
-        sport: e.target.sport.value,
-        competition: e.target.competition.value
+        competition: e.target.competition.value,
+        team_1_score: e.target.team_1_score.value,
+        team_2_score: e.target.team_2_score.value,
+        sport: e.target.sport.value
     }
+
+    fetch(visitsApi, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(newVisit),
+      })
+        .then((res) => res.json())
+        .then((json) => displayVisitsModal(json))
+        .then(newVisitForm.reset());
 }

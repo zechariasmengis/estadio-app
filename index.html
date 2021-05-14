@@ -14,7 +14,7 @@
     <!-- Offcanvas that displays all visits for a given user -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel"></h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Hello</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -26,36 +26,65 @@
     <div class="main-container">
         <!-- Side nav displaying all users -->
         <div class="sidenav">
-            <h5>All Users</h5>
+            <h5 id="side-nav-heading">All Users</h5>
         </div>
         <div class="hero">
-            <form id="newUserForm">
-                <label>Username <input name="username"></label>
-                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add New User</button>
-            </form><br><br>
-            <form id="newVisitForm">
-                <input type="hidden" name="stadium_id">
-                <label for="user_id">User <select name="user_id" id="userSelect">
-                    <!-- Target for user options -->
-                    </select>
-                </label>
-                <label>Home Team <input type="text" name="team_1"></label>
-                <label>Home Team Score <input type="number" name="team_1_score"></label>
-                <label>Away Team <input type="text" name="team_2"></label>
-                <label>Away Team Score <input type="number" name="team_2_score"></label>
-                <label>Date <input type="date" name="date"></label>
-                <label>Competition <input type="text" name="competition"></label>
-                <label>Sport<select name="sport">
-                    <option value="Soccer">Soccer</option>
-                    <option value="Football">Football</option>
-                    <option value="Basketball">Basketball</option>
-                    <option value="Baseball">Baseball</option>
-                    <option value="Hockey">Hockey</option>
-                    <option value="Other">Other</option>
-                    </select>
-                </label>
-                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add New User</button>
-            </form>
+            <h1 id="page-title">Estadio</h1>
+
+            <div id="hero-button-div">
+                <form id="newUserForm">
+                    <input name="username">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Create New User</button>
+                </form><br><br>
+                <button id="hero-visit-button" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add New Visit
+                </button>
+            </div>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Visit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newVisitForm">
+                            <label for="stadium_id">Stadium <select name="stadium_id" id="stadiumSelect">
+                                <!-- Target for stadium options -->
+                                </select>
+                            </label>
+                            <label for="user_id">User <select name="user_id" id="userSelect">
+                                <!-- Target for user options -->
+                                </select>
+                            </label>
+                            <label>Home Team <input type="text" name="team_1"></label>
+                            <label>Home Team Score <input type="number" name="team_1_score"></label>
+                            <label>Away Team <input type="text" name="team_2"></label>
+                            <label>Away Team Score <input type="number" name="team_2_score"></label>
+                            <label>Date <input type="date" name="date"></label>
+                            <label>Competition <input type="text" name="competition"></label>
+                            <label>Sport<select name="sport">
+                                <option value="Soccer">Soccer</option>
+                                <option value="Football">Football</option>
+                                <option value="Basketball">Basketball</option>
+                                <option value="Baseball">Baseball</option>
+                                <option value="Hockey">Hockey</option>
+                                <option value="Other">Other</option>
+                                </select>
+                            </label>
+                            <button type="submit" class="btn btn-primary" >Add New Visit</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
         </div>
         <div class="search-container">
             <input
