@@ -39,10 +39,10 @@ function displayStadium(stadium) {
     let stadiumInstanceId = stadium.id;
 
     stadiumInstance.innerHTML = `
-        <div class="card stadium-card" style="width: 18rem;">
+        <div class="card stadium-card shadow p-3 mb-5" style="width: 18rem;">
             <img src="${stadium.image}" class="card-img-top stadium-card-image" alt="${stadium.name}">
             <div class="card-body">
-                <h5 class="card-title text-center">${stadium.name}</h5>
+                <h5 class="card-title text-center card-stadium-name">${stadium.name}</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item stadium-list-item"> 🛡 ${stadium.home_team}</li>
                     <li class="list-group-item stadium-list-item"> 📍 ${stadium.city}, ${stadium.country}</li>
@@ -101,8 +101,8 @@ function populateVisitsModal(user) {
                     ${visit.stadium_id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title text-center">${visit.sport.charAt(0).toUpperCase() + visit.sport.slice(1)} | ${visit.competition}</h5>
-                        <p class="card-text text-center">${visit.team_1} ${visit.team_1_score}:${visit.team_2_score} ${visit.team_2}</p>
+                        <h5 class="card-title text-center">${visit.team_1} ${visit.team_1_score}<br>${visit.team_2} ${visit.team_2_score} </h5>
+                        <p class="card-text text-center">${visit.sport.charAt(0).toUpperCase() + visit.sport.slice(1)} | ${visit.competition}</p>
                         <p class="card-text text-center">${visit.date}</p>
                     </div>
                   `
